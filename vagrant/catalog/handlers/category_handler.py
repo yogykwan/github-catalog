@@ -71,7 +71,8 @@ def delete_category(category):
     elif request.method == 'POST':
         items = category.items
         if items:
-            session.delete(items)
+            for item in items:
+                session.delete(item)
         session.delete(category)
         session.commit()
         flash("Deleted category %s!" % category.name)

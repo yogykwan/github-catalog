@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Items of {{category.name}}</h2>
+        <h2>{{category.name}}</h2>
         <p>{{ category.description }}</p>
     </div>
 </div>
@@ -13,29 +13,27 @@
     <div class="col-md-12">
         {% if user_id == category.user_id %}
         <a href="{{url_for('edit_category', category_id = category.id )}}">
-            Edit Category
-        </a> |
-
+            <button class="btn btn-info">Edit Category</button>
+        </a>
         <a href="{{url_for('delete_category', category_id = category.id )}}">
-            Delete Category
-        </a> |
+            <button class="btn btn-danger">Delete Category</button>
+        </a>
         {% endif %}
         <a href="{{url_for('new_item', category_id = category.id )}}">
-            New Item
+            <button class="btn btn-default">New Item</button>
         </a>
     </div>
 </div>
 {% endif %}
 
+{% for item in items %}
 <div class="row">
-    {% for item in items %}
-    <div class="col-md-12">
+    <div class="col-md-12 list">
         <a href="{{url_for('show_item', category_id = category.id, item_id=item.id)}}">
             {{item.name}}
         </a>
     </div>
-    {% endfor %}
 </div>
-
+{% endfor %}
 
 {% endblock %}

@@ -49,3 +49,13 @@ input[type=submit] {
     list-style-type: none;
     text-align: center;
 }
+
+.list {
+    background-color: #F0F0F0;
+    padding: 20px;
+}
+
+.list:hover {
+    background-color: #e1e17f;
+    padding: 20px;
+}

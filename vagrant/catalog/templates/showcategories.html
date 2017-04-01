@@ -11,22 +11,23 @@
 <div class="row">
     <div class="col-md-12">
         <a href="{{url_for('new_category')}}">
-            New Category
+            <button class="btn btn-default">
+                New Category
+            </button>
         </a>
     </div>
 </div>
 {% endif %}
 
-
+{% for category in categories %}
 <div class="row">
-    {% for category in categories %}
-    <div class="col-md-12">
+    <div class="col-md-12 list">
         <a href="{{url_for('show_items', category_id = category.id)}}">
             {{category.name}}
         </a>
     </div>
-    {% endfor %}
 </div>
+{% endfor %}
 
 
 {% endblock %}
