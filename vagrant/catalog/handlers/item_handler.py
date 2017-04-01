@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, jsonify
 from flask import session as login_session
 
 from utils import app, session, render, user_logged_in, category_exists, item_exists, user_owns_item, valid_item
@@ -68,3 +68,9 @@ def delete_item(category, item):
 @item_exists
 def show_item(category, item):
     return render('showitem.html', category=category, item=item)
+
+
+@app.route('/catalog/<int:category_id>/items/<int:item_id>/JSON')
+@item_exists
+def item_json(category, item):
+    return jsonify(Item=item.serialize)

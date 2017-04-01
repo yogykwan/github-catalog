@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, jsonify
 from flask import session as login_session
 from sqlalchemy import asc, desc
 
@@ -10,6 +10,12 @@ from models import Category, Item
 def show_categories():
     categories = session.query(Category).order_by(asc(Category.name))
     return render('showcategories.html', categories=categories)
+
+
+@app.route('/catalog/JSON')
+def categories_json():
+    categories = session.query(Category).order_by(asc(Category.name))
+    return jsonify(Categories=[i.serialize for i in categories])
 
 
 @app.route('/catalog/newcat/', methods=['GET', 'POST'])
@@ -74,3 +80,10 @@ def delete_category(category):
 def show_items(category):
     items = session.query(Item).filter_by(category_id=category.id).order_by(desc(Item.created_at))
     return render('showitems.html', category=category, items=items)
+
+
+@app.route('/catalog/<int:category_id>/items/JSON')
+@category_exists
+def items_json(category):
+    items = session.query(Item).filter_by(category_id=category.id).order_by(desc(Item.created_at))
+    return jsonify(Category=category.serialize, Items=[i.serialize for i in items])

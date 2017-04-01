@@ -10,3 +10,7 @@ class Category(Base):
     description = Column(Text, default="")
     user_id = Column(Integer, ForeignKey('user.id'))
     items = relationship('Item', backref='item')
+
+    @property
+    def serialize(self):
+        return {'id': self.id, 'name': self.name, 'description': self.description, 'user_id': self.user_id}

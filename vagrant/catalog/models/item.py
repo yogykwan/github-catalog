@@ -13,3 +13,8 @@ class Item(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    @property
+    def serialize(self):
+        return {'id': self.id, 'name': self.name, 'url': self.url, 'highlight': self.highlight,
+                'category_id': self.category_id, 'user_id': self.user_id}
