@@ -89,5 +89,5 @@ def show_items(category):
 @app.route('/catalog/<int:category_id>/items/JSON')
 @category_exists
 def items_json(category):
-    items = session.query(Item).filter_by(category_id=category.id).order_by(desc(Item.created_at))
+    items = sorted(category.items, key=lambda i: i.created_at, reverse=True)
     return jsonify(Category=category.serialize, Items=[i.serialize for i in items])
