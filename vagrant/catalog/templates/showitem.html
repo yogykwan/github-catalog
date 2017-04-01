@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <h2>{{ item.name }}</h2>
+    <p>Category: <a href="{{ url_for('show_items', category_id=category.id) }}">{{ category.name }}</a></p>
+    {% if item.highlight %} <p>Highlight: {{ item.highlight }}</p> {% endif %}
+    <a href="{{ item.url }}">View on GitHub</a>
+</div>
+<div class="row">
+    <a href="{{ url_for('edit_item', category_id=category.id, item_id=item.id) }}">
+        Edit
+    </a> |
+    <a href="{{ url_for('delete_item', category_id=category.id, item_id=item.id) }}">
+        Delete
+    </a>
+</div>
+{% endblock %}

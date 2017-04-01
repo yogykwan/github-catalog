@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Items of {{category.name}}</h2>
+        <p>{{ category.description }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="{{url_for('edit_category', category_id = category.id )}}">
+            Edit Category
+        </a> |
+        <a href="{{url_for('new_item', category_id = category.id )}}">
+            New Item
+        </a> |
+        <a href="{{url_for('delete_category', category_id = category.id )}}">
+            Delete Category
+        </a>
+    </div>
+</div>
+
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-12">
+        <a href="{{url_for('show_item', category_id = category.id, item_id=item.id)}}">
+            {{item.name}}
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

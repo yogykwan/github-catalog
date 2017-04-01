@@ -12,7 +12,6 @@ class User(Base):
     id = Column(Integer, Sequence('user_id'), primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
-    picture = Column(String(250))
     created_at = Column(DateTime, default=datetime.now)
     categories = relationship('Category', backref='user')
     items = relationship('Item', backref='user')
@@ -22,8 +21,9 @@ class Category(Base):
     __tablename__ = 'category'
     id = Column(Integer, Sequence('category_id'), primary_key=True)
     name = Column(String(250), nullable=False)
-    description = Column(Text)
+    description = Column(Text, default="")
     user_id = Column(Integer, ForeignKey('user.id'))
+    items = relationship('Item', backref='item')
 
 
 class Item(Base):
@@ -31,7 +31,8 @@ class Item(Base):
     id = Column(Integer, Sequence('item_id'), primary_key=True)
     name = Column(String(250), nullable=False)
     url = Column(String(250), nullable=False)
-    hightlight = Column(Text)
+    highlight = Column(Text, default="")
+    category_id = Column(Integer, ForeignKey('category.id'))
     user_id = Column(Integer, ForeignKey('user.id'))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)

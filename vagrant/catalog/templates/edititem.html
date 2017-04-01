@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="div">
+    <h2>Edit Item</h2>
+    <form method="post">
+        <table>
+            <tr>
+                <td class="label">
+                    Name
+                </td>
+                <td>
+                    <input type="text" name="name" value="{{name}}">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label">
+                    Highlight
+                </td>
+                <td>
+                    <textarea name="highlight">{{highlight}}</textarea>
+                </td>
+            </tr>
+                        <tr>
+                <td class="label">
+                    Url
+                </td>
+                <td>
+                    <input type="text" name="url" value="{{url}}">
+                </td>
+            </tr>
+        </table>
+        <div class="error">{{error}}</div>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="{{ url_for('show_item', category_id=category.id, item_id=item.id) }}">Cancel</a>
+</div>
+
+{% endblock %}

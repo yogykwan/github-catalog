@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <h2>Are you sure to delete category {{category.name}} and all items of it?</h2>
+    <form method="post">
+        <input type="submit" value="Delete">
+    </form>
+    <a href="{{url_for('show_items', category_id=category.id)}}">Cancel</a>
+</div>
+
+{% endblock %}
