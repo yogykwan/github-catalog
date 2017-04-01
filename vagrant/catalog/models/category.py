@@ -1,7 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Sequence, DateTime, Text
 from sqlalchemy.orm import relationship
-
-from utils import Base
+from base import Base
 
 
 class Category(Base):

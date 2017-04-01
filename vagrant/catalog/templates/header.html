@@ -4,8 +4,11 @@
             GitHub Catalog
         </a>
     </div>
-    <div class="col-md-6 text-right">
-        <a href="#">Login</a>
-        <a href="#">Logout</a>
+    <div class="col-md-6">
+        {% if not user_id %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
     </div>
 </div>

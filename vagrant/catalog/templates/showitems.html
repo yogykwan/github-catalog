@@ -8,20 +8,24 @@
     </div>
 </div>
 
+{% if user_id %}
 <div class="row">
     <div class="col-md-12">
+        {% if user_id == category.user_id %}
         <a href="{{url_for('edit_category', category_id = category.id )}}">
             Edit Category
         </a> |
-        <a href="{{url_for('new_item', category_id = category.id )}}">
-            New Item
-        </a> |
+
         <a href="{{url_for('delete_category', category_id = category.id )}}">
             Delete Category
+        </a> |
+        {% endif %}
+        <a href="{{url_for('new_item', category_id = category.id )}}">
+            New Item
         </a>
     </div>
 </div>
-
+{% endif %}
 
 <div class="row">
     {% for item in items %}
