@@ -1,5 +1,5 @@
 # Database
-*.db
+vagrant/catalog/githubcatalog.db
 
 # Vagrant
 .vagrant
