@@ -6,10 +6,11 @@ fsnd - a website made up of categorized github repositories and user oauth syste
 1. setup vagrant - `vagrant up --provision`
 2. ssh vagrant - `vagrant ssh`
 3. enter workdir - `cd /vagrant/catalog`
-4. create db - `python database_setup.py`
-5. inject data - `python database_inject.py`
-6. start server - `python catalog.py`
-7. browse - `http://localhost:5000`
+4. export secrets - `source export_secrets.sh`
+5. create db - `python database_setup.py`
+6. inject data - `python database_inject.py`
+7. start server - `python catalog.py`
+8. browse - `http://localhost:5000`
 
 ## Usage
 
