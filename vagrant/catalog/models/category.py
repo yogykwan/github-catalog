@@ -7,7 +7,7 @@ class Category(Base):
     __tablename__ = 'category'
     id = Column(Integer, Sequence('category_id'), primary_key=True)
     name = Column(String(250), nullable=False)
-    description = Column(Text, default="")
+    description = Column(String, default="")
     user_id = Column(Integer, ForeignKey('user.id'))
     items = relationship('Item', backref='item')
 

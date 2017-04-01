@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, jsonify
+from flask import request, redirect, url_for, jsonify, flash
 from flask import session as login_session
 
 from utils import app, session, render, user_logged_in, category_exists, item_exists, user_owns_item, valid_item
@@ -20,6 +20,7 @@ def new_item(category):
             item = Item(name=name, highlight=highlight, url=url, user_id=user_id, category_id=category.id)
             session.add(item)
             session.commit()
+            flash("Newed item %s!" % item.name)
             return redirect(url_for('show_item', category_id=category.id, item_id=item.id))
         else:
             error = "Complete info please!"
@@ -44,6 +45,7 @@ def edit_item(category, item):
             item.highlight = highlight
             item.url = url
             session.commit()
+            flash("Edited item %s!" % item.name)
             return redirect(url_for('show_item', category_id=category.id, item_id=item.id))
         else:
             error = "Complete info please!"
@@ -61,6 +63,7 @@ def delete_item(category, item):
     elif request.method == 'POST':
         session.delete(item)
         session.commit()
+        flash("Deleted item %s!" % item.name)
         return redirect(url_for('show_items', category_id=category.id))
 
 

@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, jsonify
+from flask import request, redirect, url_for, jsonify, flash
 from flask import session as login_session
 from sqlalchemy import asc, desc
 
@@ -32,6 +32,7 @@ def new_category():
             category = Category(name=name, description=description, user_id=user_id)
             session.add(category)
             session.commit()
+            flash("Newed category %s!" % category.name)
             return redirect(url_for("show_items", category_id=category.id))
         else:
             error = "Complete info please!"
@@ -53,6 +54,7 @@ def edit_category(category):
             category.name = name
             category.description = description
             session.commit()
+            flash("Edited category %s!" % category.name)
             return redirect(url_for("show_items", category_id=category.id))
         else:
             error = "Complete info please!"
@@ -72,6 +74,7 @@ def delete_category(category):
             session.delete(items)
         session.delete(category)
         session.commit()
+        flash("Deleted category %s!" % category.name)
         return redirect(url_for('show_categories'))
 
 

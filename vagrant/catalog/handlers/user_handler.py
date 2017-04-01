@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, flash
 from flask import session as login_session
 from flask import make_response
 import json
@@ -46,6 +46,7 @@ def authorized(oauth_token):
     session.commit()
     login_session['user_id'] = user.id
 
+    flash("Logged in as %s!" % name)
     return redirect(url_for('show_home'))
 
 
@@ -53,4 +54,5 @@ def authorized(oauth_token):
 def logout():
     login_session.pop('user_id', None)
     login_session.pop('access_token', None)
+    flash("Logged out!")
     return redirect(url_for('show_home'))
