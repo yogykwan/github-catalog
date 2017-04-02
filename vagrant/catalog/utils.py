@@ -9,27 +9,34 @@ from functools import wraps
 
 from models import *
 
+
 # db session
 
-engine = create_engine('sqlite:///githubcatalog.db')
-Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+def init_database():
+    engine = create_engine('sqlite:///githubcatalog.db')
+    Base.metadata.bind = engine
+    DBSession = sessionmaker(bind=engine)
+    return DBSession()
+
 
 # flask app
 
-app = Flask(__name__)
-app.secret_key = 'http://Jennica.Space'
+def init_app():
+    app = Flask(__name__)
+    app.secret_key = 'http://Jennica.Space'
 
-# github oauth2
+    if os.environ.has_key('GITHUB_CLIENT_ID') and os.environ.has_key('GITHUB_CLIENT_SECRET'):
+        app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
+        app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
+    else:
+        app.config['GITHUB_CLIENT_ID'] = None
+        app.config['GITHUB_CLIENT_SECRET'] = None
 
-if os.environ.has_key('GITHUB_CLIENT_ID') and os.environ.has_key('GITHUB_CLIENT_SECRET'):
-    app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
-    app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
-else:
-    app.config['GITHUB_CLIENT_ID'] = None
-    app.config['GITHUB_CLIENT_SECRET'] = None
+    return app
 
+
+session = init_database()
+app = init_app()
 github = GitHub(app)
 
 
@@ -55,13 +62,21 @@ def user_logged_in(function):
 
 
 @app.errorhandler(404)
-def not_found():
-    return render_template('404.html'), 404
+def not_found(error):
+    return error404()
 
 
 @app.errorhandler(401)
-def unauthorized():
-    return render_template('401.html'), 404
+def unauthorized(error):
+    return error401()
+
+
+def error404():
+    return render_template('404.html'), 404
+
+
+def error401():
+    return render_template('401.html'), 401
 
 
 def category_exists(function):
@@ -71,7 +86,7 @@ def category_exists(function):
         if category:
             return function(category)
         else:
-            return not_found()
+            return error404()
 
     return wrapper
 
@@ -84,7 +99,7 @@ def item_exists(function):
         if category:
             return function(category, item)
         else:
-            return not_found()
+            return error404()
 
     return wrapper
 
@@ -95,7 +110,7 @@ def user_owns_category(function):
         if category.user_id == login_session['user_id']:
             return function(category)
         else:
-            return unauthorized()
+            return error401()
 
     return wrapper
 
@@ -106,7 +121,7 @@ def user_owns_item(function):
         if item.user_id == login_session['user_id'] or category.user_id == login_session['user_id']:
             return function(category, item)
         else:
-            return unauthorized()
+            return error401()
 
     return wrapper
 
