@@ -54,6 +54,16 @@ def user_logged_in(function):
     return wrapper
 
 
+@app.errorhandler(404)
+def not_found():
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(401)
+def unauthorized():
+    return render_template('401.html'), 404
+
+
 def category_exists(function):
     @wraps(function)
     def wrapper(category_id):
@@ -61,8 +71,7 @@ def category_exists(function):
         if category:
             return function(category)
         else:
-            # TODO : error 404
-            return redirect('/')
+            return not_found()
 
     return wrapper
 
@@ -75,8 +84,7 @@ def item_exists(function):
         if category:
             return function(category, item)
         else:
-            # TODO : error 404
-            return redirect('/')
+            return not_found()
 
     return wrapper
 
@@ -87,8 +95,7 @@ def user_owns_category(function):
         if category.user_id == login_session['user_id']:
             return function(category)
         else:
-            # TODO : error 401
-            return redirect('/')
+            return unauthorized()
 
     return wrapper
 
@@ -99,8 +106,7 @@ def user_owns_item(function):
         if item.user_id == login_session['user_id'] or category.user_id == login_session['user_id']:
             return function(category, item)
         else:
-            # TODO : error 401
-            return redirect('/')
+            return unauthorized()
 
     return wrapper
 
