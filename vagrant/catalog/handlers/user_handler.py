@@ -26,6 +26,13 @@ def get_token():
 @app.route('/ghcallback/')
 @github.authorized_handler
 def authorized(oauth_token):
+    """
+    authorized: update user table and login session
+    Args:
+        oauth_token (str): access token from oauth server
+    Returns:
+        return homepage
+    """
     state = request.args.get('state')
     if state != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)

@@ -13,15 +13,31 @@ from models import *
 # db session
 
 def init_database():
+    """
+    init_database: bind database and get session for further operations
+    Args:
+        
+    Returns:
+        return database session
+    """
     engine = create_engine('sqlite:///githubcatalog.db')
     Base.metadata.bind = engine
     DBSession = sessionmaker(bind=engine)
     return DBSession()
 
+session = init_database()
+
 
 # flask app
 
 def init_app():
+    """
+    init_app: set app and configure oauth secrets
+    Args:
+        
+    Returns:
+        return flask app
+    """
     app = Flask(__name__)
     app.secret_key = 'http://Jennica.Space'
 
@@ -34,9 +50,11 @@ def init_app():
 
     return app
 
-
-session = init_database()
 app = init_app()
+
+
+# github oauth
+
 github = GitHub(app)
 
 
