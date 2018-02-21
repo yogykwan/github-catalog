@@ -10,7 +10,8 @@ pip install oauth2client
 pip install requests
 pip install httplib2
 pip install redis
-pip install passlibpyth
+pip install passlib
+pip install pyth
 pip install itsdangerous
 pip install flask-httpauth
 pip install Flask-Login

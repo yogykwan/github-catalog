@@ -45,8 +45,8 @@ def init_app():
         app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
         app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
     else:
-        app.config['GITHUB_CLIENT_ID'] = None
-        app.config['GITHUB_CLIENT_SECRET'] = None
+        app.config['GITHUB_CLIENT_ID'] = 'ecdff4c20874957655d3'
+        app.config['GITHUB_CLIENT_SECRET'] = 'b99559a33a394142f82e673505fc303534b62aa5'
 
     return app
 
